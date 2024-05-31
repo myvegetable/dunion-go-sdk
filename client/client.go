@@ -4,10 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"github.com/dunion-openapi-sdk/dunion-go-sdk/const"
-	"github.com/dunion-openapi-sdk/dunion-go-sdk/model"
-	"github.com/dunion-openapi-sdk/dunion-go-sdk/util"
 	"time"
+
+	consts "github.com/myvegetable/dunion-go-sdk/const"
+	"github.com/myvegetable/dunion-go-sdk/model"
+	"github.com/myvegetable/dunion-go-sdk/util"
 )
 
 type client struct {
@@ -37,7 +38,7 @@ func NewUnionClient(appKey string, accessKey string) UnionClient {
 	}
 }
 
-//GenerateH5Link 生成h5推广链接
+// GenerateH5Link 生成h5推广链接
 func (s client) GenerateH5Link(ctx context.Context, activityID, promotionID int64, sourceID string, opt ...model.Option) (*model.LinkResponse, error) {
 	body := map[string]interface{}{
 		"activity_id":  activityID,
@@ -54,7 +55,7 @@ func (s client) GenerateH5Link(ctx context.Context, activityID, promotionID int6
 	return result, err
 }
 
-//GenerateMiniLink 生成小程序页面推广路径
+// GenerateMiniLink 生成小程序页面推广路径
 func (s client) GenerateMiniLink(ctx context.Context, activityID, promotionID int64, sourceID string, opt ...model.Option) (*model.LinkResponse, error) {
 	body := map[string]interface{}{
 		"activity_id":  activityID,
@@ -71,7 +72,7 @@ func (s client) GenerateMiniLink(ctx context.Context, activityID, promotionID in
 	return result, err
 }
 
-//GenerateH5Code 生成h5二维码，需先取链得到dsi
+// GenerateH5Code 生成h5二维码，需先取链得到dsi
 func (s client) GenerateH5Code(ctx context.Context, dsi, sourceID string, opt ...model.Option) (*model.QrcodeResponse, error) {
 	param := map[string]interface{}{
 		"dsi":       dsi,
@@ -87,7 +88,7 @@ func (s client) GenerateH5Code(ctx context.Context, dsi, sourceID string, opt ..
 	return result, err
 }
 
-//GenerateMiniCode 生成小程序太阳码，需先取链得到dsi
+// GenerateMiniCode 生成小程序太阳码，需先取链得到dsi
 func (s client) GenerateMiniCode(ctx context.Context, dsi, sourceID string, opt ...model.Option) (*model.QrcodeResponse, error) {
 	param := map[string]interface{}{
 		"dsi":       dsi,
@@ -103,7 +104,7 @@ func (s client) GenerateMiniCode(ctx context.Context, dsi, sourceID string, opt 
 	return result, err
 }
 
-//GeneratePoster 生成推广海报，需先取链得到dsi
+// GeneratePoster 生成推广海报，需先取链得到dsi
 func (s client) GeneratePoster(ctx context.Context, dsi, sourceID string, opt ...model.Option) (*model.PosterResponse, error) {
 	param := map[string]interface{}{
 		"dsi":       dsi,
@@ -118,11 +119,11 @@ func (s client) GeneratePoster(ctx context.Context, dsi, sourceID string, opt ..
 	return result, err
 }
 
-//GenerateCouponPwd 生成券码
+// GenerateCouponPwd 生成券码
 func (s client) GenerateCouponPwd(ctx context.Context, activityID, promotionID int64, sourceID string, opt ...model.Option) (*model.PwdResponse, error) {
 	body := map[string]interface{}{
 		"activity_id":  activityID,
-		"pwd_type":    "coupon",
+		"pwd_type":     "coupon",
 		"promotion_id": promotionID,
 		"source_id":    sourceID,
 	}
@@ -135,7 +136,7 @@ func (s client) GenerateCouponPwd(ctx context.Context, activityID, promotionID i
 	return result, err
 }
 
-//QueryOrderList 查询订单列表，type_可用枚举见 const.OrderTypeEnergy等
+// QueryOrderList 查询订单列表，type_可用枚举见 const.OrderTypeEnergy等
 func (s client) QueryOrderList(ctx context.Context, startTime, endTime time.Time, type_ string, page, size int, opt ...model.Option) (*model.OrderResponse, error) {
 	if page < 0 || page > 100 || size < 0 || size > 100 {
 		return nil, errors.New("分页参数不合法")
@@ -158,7 +159,7 @@ func (s client) QueryOrderList(ctx context.Context, startTime, endTime time.Time
 	return result, err
 }
 
-//MockOrderCallback 模拟订单回调，需先取链得到 dsi，type_ 可取 consts.MockPay 或 consts.MockRefund; 需在后台配置回调地址
+// MockOrderCallback 模拟订单回调，需先取链得到 dsi，type_ 可取 consts.MockPay 或 consts.MockRefund; 需在后台配置回调地址
 func (s client) MockOrderCallback(ctx context.Context, dsi string, sourceID string, type_ int, opt ...model.Option) (*model.OrderCallbackResponse, error) {
 	param := map[string]interface{}{
 		"dsi":       dsi,
@@ -174,7 +175,7 @@ func (s client) MockOrderCallback(ctx context.Context, dsi string, sourceID stri
 	return result, err
 }
 
-//GenerateH5CodeDirectly 直接生成h5推广二维码，会内置请求一次取链接口
+// GenerateH5CodeDirectly 直接生成h5推广二维码，会内置请求一次取链接口
 func (s client) GenerateH5CodeDirectly(ctx context.Context, activityID, promotionID int64, sourceID string, opt ...model.Option) (*model.QrcodeResponse, error) {
 	link, err := s.GenerateMiniLink(ctx, activityID, promotionID, sourceID, opt...)
 	if err != nil {
@@ -184,7 +185,7 @@ func (s client) GenerateH5CodeDirectly(ctx context.Context, activityID, promotio
 	return s.GenerateH5Code(ctx, dsi, sourceID, opt...)
 }
 
-//GenerateMiniCodeDirectly 直接生成小程序推广太阳码，会内置请求一次取链接口
+// GenerateMiniCodeDirectly 直接生成小程序推广太阳码，会内置请求一次取链接口
 func (s client) GenerateMiniCodeDirectly(ctx context.Context, activityID, promotionID int64, sourceID string, opt ...model.Option) (*model.QrcodeResponse, error) {
 	link, err := s.GenerateMiniLink(ctx, activityID, promotionID, sourceID, opt...)
 	if err != nil {
@@ -194,7 +195,7 @@ func (s client) GenerateMiniCodeDirectly(ctx context.Context, activityID, promot
 	return s.GenerateMiniCode(ctx, dsi, sourceID, opt...)
 }
 
-//GeneratePosterDirectly 直接生成推广海报，会内置请求一次取链接口
+// GeneratePosterDirectly 直接生成推广海报，会内置请求一次取链接口
 func (s client) GeneratePosterDirectly(ctx context.Context, activityID, promotionID int64, sourceID string, opt ...model.Option) (*model.PosterResponse, error) {
 	link, err := s.GenerateMiniLink(ctx, activityID, promotionID, sourceID, opt...)
 	if err != nil {
@@ -204,7 +205,7 @@ func (s client) GeneratePosterDirectly(ctx context.Context, activityID, promotio
 	return s.GeneratePoster(ctx, dsi, sourceID, opt...)
 }
 
-//SelfQueryOrder 订单归因问题自查询
+// SelfQueryOrder 订单归因问题自查询
 func (s client) SelfQueryOrder(ctx context.Context, orderID string, opt ...model.Option) (*model.SelfQueryResponse, error) {
 	param := map[string]interface{}{
 		"order_id": orderID,

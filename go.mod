@@ -1,4 +1,4 @@
-module github.com/dunion-openapi-sdk/dunion-go-sdk
+module github.com/myvegetable/dunion-go-sdk
 
 go 1.13
 

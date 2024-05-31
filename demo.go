@@ -3,8 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/dunion-openapi-sdk/dunion-go-sdk/client"
-	"github.com/dunion-openapi-sdk/dunion-go-sdk/util"
+
+	"github.com/myvegetable/dunion-go-sdk/client"
+	"github.com/myvegetable/dunion-go-sdk/util"
 )
 
 func main() {

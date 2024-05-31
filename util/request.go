@@ -5,12 +5,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	consts "github.com/dunion-openapi-sdk/dunion-go-sdk/const"
-	"github.com/dunion-openapi-sdk/dunion-go-sdk/model"
 	"io/ioutil"
 	"net/http"
 	netUrl "net/url"
 	"time"
+
+	consts "github.com/myvegetable/dunion-go-sdk/const"
+	"github.com/myvegetable/dunion-go-sdk/model"
 )
 
 const (

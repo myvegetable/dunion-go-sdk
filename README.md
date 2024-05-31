@@ -1,10 +1,10 @@
 # 滴滴联盟 openAPI go-sdk
 
-引入mod  
+引入mod
 ```
-go get github.com/dunion-openapi-sdk/dunion-go-sdk@master
+go get github.com/myvegetable/dunion-go-sdk@master
 ```
-使用方法  
+使用方法
 ```
 c := client.NewUnionClient("appkey", "accesskey")
 //日志可选，将在指定目录生成日志
@@ -29,12 +29,12 @@ if err != nil {
 }
 ```
 
-函数一览  
+函数一览
 
 |  函数原型   | 用途  |
 |  ----  | ----  |
 | GenerateH5Link(activityID, promotionID int64, sourceID string) (*model.LinkResponse, error) | 生成h5推广链接 |
-| GenerateMiniLink(activityID, promotionID int64, sourceID string) (*model.LinkResponse, error) | 生成小程序页面推广路径|  
+| GenerateMiniLink(activityID, promotionID int64, sourceID string) (*model.LinkResponse, error) | 生成小程序页面推广路径|
 | GenerateH5Code(dsi, sourceID string) (*model.QrcodeResponse, error)|生成h5二维码，需先取链得到dsi|
 | GenerateMiniCode(dsi, sourceID string) (*model.QrcodeResponse, error)|生成小程序太阳码，需先取链得到dsi|
 | GeneratePoster(dsi, sourceID string) (*model.PosterResponse, error)|生成推广海报，需先取链得到dsi|
